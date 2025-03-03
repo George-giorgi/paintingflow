@@ -1,3 +1,3 @@
 export default function FillForm() {
-  return <div>Form Here</div>;
+  return <div className="">Form Here</div>;
 }
