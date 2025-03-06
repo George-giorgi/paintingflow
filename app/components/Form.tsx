@@ -17,10 +17,8 @@ export default function FillForm() {
   const [data, setData] = useState<any[]>([]);
 
   // zustand
-  const { ovens, setInput, selected_oven, setOven, options } = inputStore();
-
-  console.log("page refresh");
-  console.log(selected_oven);
+  const { ovens, setInput, selected_oven, setOven, options, item_number } =
+    inputStore();
 
   const currentoven = ovens[selected_oven];
   console.log(currentoven);
@@ -38,10 +36,15 @@ export default function FillForm() {
       }
       try {
         const response = await fetch(
-          `/api/db?search=${encodeURIComponent(value)}`
+          `/api/db?search=${encodeURIComponent(item_number)}`
         );
         const result = await response.json();
-        setData(result);
+        console.log(result);
+
+        setInput("item_length", result.item_length || "");
+        setInput("item_width", result.item_width || "");
+        setInput("item_height", result.item_height || "");
+        setInput("item_weight", result.item_weight || "");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -63,6 +66,7 @@ export default function FillForm() {
               type="text"
               placeholder="Enter item number..."
               className="placeholder:text-sm w-full px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
+              value={item_number}
             />
           </div>
           {/* icons */}
