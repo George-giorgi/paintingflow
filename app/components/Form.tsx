@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PaletteIcon from "@mui/icons-material/Palette";
 import BrushIcon from "@mui/icons-material/Brush";
 import inputStore from "../store_zustand/inputStore";
 import { OvenKey } from "../lib/definitions/types";
+
 import {
   Listbox,
   ListboxButton,
@@ -46,10 +46,10 @@ export default function FillForm() {
         const result = await response.json();
         console.log(result);
 
-        setInput("item_length", result.item_length || "");
-        setInput("item_width", result.item_width || "");
+        setInput("item_length", result[0].Length || "");
+        setInput("item_width", result[0].Width || "");
         setInput("item_height", result.item_height || "");
-        setInput("item_weight", result.item_weight || "");
+        setInput("item_weight", result[0].Weight || "");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -58,7 +58,7 @@ export default function FillForm() {
 
   return (
     <div className=" ">
-      <form className=" flex flex-col  gap-3 ">
+      <form className="  flex flex-col  gap-3 border-b-1 border-gray-300 pb-15">
         <div className=" flex md:flex-row  gap-4 flex-col items-center  justify-between">
           {/* item number */}
           <div className="  flex flex-col justify-center items-center ">
@@ -156,7 +156,7 @@ export default function FillForm() {
           </div>
         </div>
         {/* oven */}
-        <div className=" flex-1 relative  ">
+        <div className=" flex-1 flex flex-col items-center justify-center relative  ">
           <p className=" text-center text-[10px] p-0.5  ">choose oven</p>
           <Listbox value={selected_oven} onChange={setOven}>
             {/* Select Button */}
@@ -235,10 +235,10 @@ export default function FillForm() {
           </div>
         </div>
         <button
-          className="text-white bg-transparent border-2 cursor-pointer rounded-3xl p-4 w-fit !mt-5"
+          className=" transition-all hover:scale-y-95   text-sm text-white bg-transparent border-1 cursor-pointer rounded-3xl p-2 w-fit h-fit !mt-5"
           type="submit"
         >
-          Submit Task
+          Prepare Task
         </button>
       </form>
     </div>
