@@ -14,11 +14,20 @@ import {
 } from "@headlessui/react";
 
 export default function FillForm() {
-  const [data, setData] = useState<any[]>([]);
-
   // zustand
-  const { ovens, setInput, selected_oven, setOven, options, item_number } =
-    inputStore();
+  const {
+    ovens,
+    setInput,
+    selected_oven,
+    setOven,
+    options,
+    item_number,
+    item_height,
+    item_weight,
+    item_length,
+    item_qty,
+    item_width,
+  } = inputStore();
 
   const currentoven = ovens[selected_oven];
   console.log(currentoven);
@@ -30,10 +39,6 @@ export default function FillForm() {
     setInput(inpName, value);
 
     if (inpName == "item_number") {
-      if (value.trim().length === 0) {
-        setData([]); // Clear results if input is empty
-        return;
-      }
       try {
         const response = await fetch(
           `/api/db?search=${encodeURIComponent(item_number)}`
