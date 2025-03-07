@@ -4,6 +4,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PaletteIcon from "@mui/icons-material/Palette";
 import BrushIcon from "@mui/icons-material/Brush";
 import inputStore from "../store_zustand/inputStore";
+import { TaskStore } from "../store_zustand/tasksStore";
 import { OvenKey } from "../lib/definitions/types";
 
 import {
@@ -30,6 +31,8 @@ export default function FillForm() {
     rev,
   } = inputStore();
 
+  const { addTask } = TaskStore();
+
   const currentoven = ovens[selected_oven];
 
   const handleonChange = async (e: any) => {
@@ -51,6 +54,7 @@ export default function FillForm() {
           setInput("item_width", "");
           setInput("item_height", "");
           setInput("item_weight", "");
+          setInput("rev", "");
           return; // Stop execution if either field is empty
         }
 
@@ -68,12 +72,14 @@ export default function FillForm() {
           setInput("item_width", result[0].Width || "");
           setInput("item_height", result[0].Height || "");
           setInput("item_weight", result[0].Weight || "");
+          setInput("rev", result[0].Rev || "");
         } else {
           // Reset fields if no result is found
           setInput("item_length", "");
           setInput("item_width", "");
           setInput("item_height", "");
           setInput("item_weight", "");
+          setInput("rev", "");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -81,9 +87,19 @@ export default function FillForm() {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("submit");
+    const content = `Itm number ${item_number}`;
+    addTask(content, "for Giorgi", "by Brendan");
+  };
+
   return (
     <div className=" ">
-      <form className="  flex flex-col  gap-3 border-b-1 border-gray-300 pb-15">
+      <form
+        onSubmit={handleSubmit}
+        className="  flex flex-col  gap-3 border-b-1 border-gray-300 pb-15"
+      >
         <div className=" flex md:flex-row  gap-4 flex-col items-center  justify-between">
           {/* item number */}
           <div className="  flex flex-col justify-center items-center ">
@@ -121,6 +137,7 @@ export default function FillForm() {
               onChange={(e) => {
                 handleonChange(e);
               }}
+              value={item_qty}
               type="text"
               placeholder="item Qty"
               className=" placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
