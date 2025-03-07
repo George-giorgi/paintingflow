@@ -292,7 +292,7 @@ export default function FillForm() {
         </div>
         {/* last row */}
 
-        <div className=" flex items-center justify-between !mt-5">
+        <div className=" flex md:flex-row flex-col-reverse items-center justify-between gap-4 !mt-5 ">
           <div className=" flex gap-2 items-center justify-center">
             <button
               className=" transition-all hover:scale-y-95   text-sm text-white bg-transparent border-1 cursor-pointer rounded-3xl p-2 w-fit h-fit "
@@ -311,7 +311,7 @@ export default function FillForm() {
               <input
                 name="task_for"
                 type="text"
-                placeholder="Task for"
+                placeholder="Task For"
                 className=" placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
                 value={task_for}
                 onChange={(e) => handleonChange(e)}
@@ -322,7 +322,7 @@ export default function FillForm() {
               <input
                 name="task_by"
                 type="text"
-                placeholder="Task by"
+                placeholder="Task By"
                 className=" placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
                 value={task_by}
                 onChange={(e) => handleonChange(e)}
