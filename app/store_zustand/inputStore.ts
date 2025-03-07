@@ -18,6 +18,8 @@ type InputStore = {
   item_width: string;
   item_weight: string;
   rev: string;
+  task_for: string;
+  task_by: string;
   setInput: (field: string, value: any) => void;
 };
 
@@ -36,6 +38,8 @@ const inputStore = create<InputStore>()(
     item_width: "",
     item_weight: "",
     rev: "",
+    task_for: "",
+    task_by: "",
     setInput: (field: string, value: any) =>
       set((state) => ({ ...state, [field]: value })),
   }))
