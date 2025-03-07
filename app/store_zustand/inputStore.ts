@@ -17,6 +17,7 @@ type InputStore = {
   item_length: string;
   item_width: string;
   item_weight: string;
+  rev: string;
   setInput: (field: string, value: any) => void;
 };
 
@@ -34,6 +35,7 @@ const inputStore = create<InputStore>()(
     item_length: "",
     item_width: "",
     item_weight: "",
+    rev: "",
     setInput: (field: string, value: any) =>
       set((state) => ({ ...state, [field]: value })),
   }))

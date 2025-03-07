@@ -27,10 +27,10 @@ export default function FillForm() {
     item_length,
     item_qty,
     item_width,
+    rev,
   } = inputStore();
 
   const currentoven = ovens[selected_oven];
-  console.log(currentoven);
 
   const handleonChange = async (e: any) => {
     const inpName = e.target.name;
@@ -38,18 +38,43 @@ export default function FillForm() {
 
     setInput(inpName, value);
 
-    if (inpName == "item_number") {
+    if (inpName === "rev" || inpName === "item_number") {
       try {
+        // Get the latest values of both inputs
+        const updatedRev = inpName === "rev" ? value.trim() : rev.trim();
+        const updatedItemNumber =
+          inpName === "item_number" ? value.trim() : item_number.trim();
+
+        // Reset fields if either `rev` or `item_number` is empty
+        if (!updatedRev || !updatedItemNumber) {
+          setInput("item_length", "");
+          setInput("item_width", "");
+          setInput("item_height", "");
+          setInput("item_weight", "");
+          return; // Stop execution if either field is empty
+        }
+
+        // Make API request when both values exist
         const response = await fetch(
-          `/api/db?search=${encodeURIComponent(item_number)}`
+          `/api/db?search=${encodeURIComponent(
+            updatedItemNumber
+          )}&rev=${encodeURIComponent(updatedRev)}`
         );
         const result = await response.json();
         console.log(result);
 
-        setInput("item_length", result[0].Length || "");
-        setInput("item_width", result[0].Width || "");
-        setInput("item_height", result.item_height || "");
-        setInput("item_weight", result[0].Weight || "");
+        if (result.length > 0) {
+          setInput("item_length", result[0].Length || "");
+          setInput("item_width", result[0].Width || "");
+          setInput("item_height", result[0].Height || "");
+          setInput("item_weight", result[0].Weight || "");
+        } else {
+          // Reset fields if no result is found
+          setInput("item_length", "");
+          setInput("item_width", "");
+          setInput("item_height", "");
+          setInput("item_weight", "");
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -74,10 +99,18 @@ export default function FillForm() {
               value={item_number}
             />
           </div>
-          {/* icons */}
-          <div>
-            <PaletteIcon />
-            <BrushIcon />
+          <div className=" flex flex-col items-center justify-center">
+            <p className=" text-center text-[10px] p-0.5 "> item rev</p>
+            <input
+              name="rev"
+              onChange={(e) => {
+                handleonChange(e);
+              }}
+              value={rev}
+              type="text"
+              placeholder="Rev"
+              className=" placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
+            />
           </div>
 
           {/* qty */}
@@ -105,6 +138,7 @@ export default function FillForm() {
                 onChange={(e) => {
                   handleonChange(e);
                 }}
+                value={item_height}
                 type="text"
                 placeholder="height"
                 className="placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
@@ -118,6 +152,7 @@ export default function FillForm() {
                 onChange={(e) => {
                   handleonChange(e);
                 }}
+                value={item_length}
                 type="text"
                 placeholder="length"
                 className=" placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
@@ -133,6 +168,7 @@ export default function FillForm() {
                 onChange={(e) => {
                   handleonChange(e);
                 }}
+                value={item_width}
                 type="text"
                 placeholder="width"
                 className="placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
@@ -145,6 +181,7 @@ export default function FillForm() {
                 onChange={(e) => {
                   handleonChange(e);
                 }}
+                value={item_weight}
                 type="text"
                 placeholder="weight"
                 className=" placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
@@ -234,12 +271,18 @@ export default function FillForm() {
             </div>
           </div>
         </div>
-        <button
-          className=" transition-all hover:scale-y-95   text-sm text-white bg-transparent border-1 cursor-pointer rounded-3xl p-2 w-fit h-fit !mt-5"
-          type="submit"
-        >
-          Prepare Task
-        </button>
+        <div className=" flex gap-2 items-center !mt-5">
+          <button
+            className=" transition-all hover:scale-y-95   text-sm text-white bg-transparent border-1 cursor-pointer rounded-3xl p-2 w-fit h-fit "
+            type="submit"
+          >
+            Prepare Task
+          </button>
+          <div className=" flex items-center justify-center">
+            <PaletteIcon />
+            <BrushIcon />
+          </div>
+        </div>
       </form>
     </div>
   );
