@@ -100,7 +100,7 @@ export default function FillForm() {
     <div className=" ">
       <form
         onSubmit={handleSubmit}
-        className="  flex flex-col  gap-3 border-b-1 border-gray-300 pb-15"
+        className="  flex flex-col  gap-2 border-b-1 border-gray-500 pb-5"
       >
         <div className=" flex md:flex-row  gap-4 flex-col items-center  justify-between">
           {/* item number */}
@@ -295,7 +295,7 @@ export default function FillForm() {
         <div className=" flex md:flex-row flex-col-reverse items-center justify-between gap-4 !mt-5 ">
           <div className=" flex gap-2 items-center justify-center">
             <button
-              className=" transition-all hover:scale-y-95   text-sm text-white bg-transparent border-1 cursor-pointer rounded-3xl p-2 w-fit h-fit "
+              className=" transition-all hover:scale-y-95   text-sm text-white bg-transparent border-1 cursor-pointer rounded-lg p-2 w-fit h-fit "
               type="submit"
             >
               Prepare Task
@@ -330,8 +330,9 @@ export default function FillForm() {
             </div>
           </div>
         </div>
-        <p className=" h-6 text-sm italic text-red-300 font-semibold transition-all">
+        <p className=" !mt-3 h-3 text-sm  text-red-300 font-semibold transition-all">
           {task_by}
+          {task_by.length > 0 ? "." : ""}
         </p>
       </form>
     </div>

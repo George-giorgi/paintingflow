@@ -1,4 +1,14 @@
 // ../definitions/types.ts
+
+export interface TaskProps {
+  partNumber: string;
+  description: string;
+  createdAt: number;
+  createdBy: string;
+  createdFor: string;
+  ovenUsedSpace: string;
+}
+
 export type Oven = {
   name: string;
   height: string;
