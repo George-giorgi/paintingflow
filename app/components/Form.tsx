@@ -28,9 +28,10 @@ export default function FillForm() {
     item_length,
     item_qty,
     item_width,
-    rev,
+    item_rev,
     task_for,
     task_by,
+    resetInputs,
   } = inputStore();
 
   const { addTask } = TaskStore();
@@ -40,13 +41,15 @@ export default function FillForm() {
   const handleonChange = async (e: any) => {
     const inpName = e.target.name;
     const value = e.target.value;
+    console.log(inpName, value);
 
     setInput(inpName, value);
 
-    if (inpName === "rev" || inpName === "item_number") {
+    if (inpName === "item_rev" || inpName === "item_number") {
       try {
         // Get the latest values of both inputs
-        const updatedRev = inpName === "rev" ? value.trim() : rev.trim();
+        const updatedRev =
+          inpName === "item_rev" ? value.trim() : item_rev.trim();
         const updatedItemNumber =
           inpName === "item_number" ? value.trim() : item_number.trim();
 
@@ -56,7 +59,7 @@ export default function FillForm() {
           setInput("item_width", "");
           setInput("item_height", "");
           setInput("item_weight", "");
-          setInput("rev", "");
+          // setInput("item_rev", "");
           return; // Stop execution if either field is empty
         }
 
@@ -66,6 +69,7 @@ export default function FillForm() {
             updatedItemNumber
           )}&rev=${encodeURIComponent(updatedRev)}`
         );
+
         const result = await response.json();
         console.log(result);
 
@@ -74,14 +78,15 @@ export default function FillForm() {
           setInput("item_width", result[0].Width || "");
           setInput("item_height", result[0].Height || "");
           setInput("item_weight", result[0].Weight || "");
-          setInput("rev", result[0].Rev || "");
+          setInput("item_rev", result[0].Rev || "");
+          // setInput("item_name", result[0]."check in db" || "");
         } else {
           // Reset fields if no result is found
           setInput("item_length", "");
           setInput("item_width", "");
           setInput("item_height", "");
           setInput("item_weight", "");
-          setInput("rev", "");
+          setInput("item_rev", "");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -92,8 +97,17 @@ export default function FillForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("submit");
-    const content = `Itm number ${item_number}`;
-    addTask(content, "for Giorgi", "by Brendan");
+
+    addTask(
+      item_number,
+      " request -> updateInpStore -> item_name",
+      item_qty,
+      item_rev,
+      selected_oven,
+      task_by,
+      task_for
+    );
+    resetInputs();
   };
 
   return (
@@ -120,14 +134,14 @@ export default function FillForm() {
           <div className=" flex flex-col items-center justify-center">
             <p className=" text-center text-[10px] p-0.5 "> item rev</p>
             <input
-              name="rev"
+              name="item_rev"
               onChange={(e) => {
                 handleonChange(e);
               }}
-              value={rev}
               type="text"
               placeholder="Rev"
               className=" placeholder:text-sm w-28 px-2 py-2 text-center border-b border-gray-300 focus:outline-none transition-colors duration-150 ease-in-out appearance-none focus:placeholder-opacity-0"
+              value={item_rev}
             />
           </div>
 
