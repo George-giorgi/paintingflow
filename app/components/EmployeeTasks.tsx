@@ -24,7 +24,7 @@ export const Tasks = () => {
         </h2>
       </Link>
 
-      <div className="w-full flex flex-col-reverse items-center justify-center gap-5 !mt-10">
+      <div className="w-full flex flex-col-reverse items-center justify-center gap-5 !mt-10 !mb-10">
         {tasks.slice(-3).map((item) => (
           <Task
             key={item.id_date} // ✅ Always use a unique key for list items

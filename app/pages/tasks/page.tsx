@@ -3,7 +3,7 @@ import { Task } from "@/app/components/EmployeeTasks";
 import { TaskStore } from "@/app/store_zustand/tasksStore";
 import ListIcon from "@mui/icons-material/List";
 
-const Tasks = () => {
+const Page = () => {
   const { tasks } = TaskStore();
   console.log(tasks);
 
@@ -30,4 +30,4 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default Page;

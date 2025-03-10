@@ -27,6 +27,7 @@ type InputStore = {
   task_for: string;
   task_by: string;
   item_name: string;
+  description: string;
 
   // Function to update any input field (field name and new value)
   setInput: (field: string, value: any) => void;
@@ -47,6 +48,7 @@ const defaultInputValues = {
   task_for: "",
   task_by: "",
   item_name: "",
+  description: "",
 };
 
 // Create the Zustand store with devtools integration

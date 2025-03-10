@@ -28,7 +28,7 @@ export async function GET(req: Request) {
       .input("rev", rev) // Securely pass parameter
       .query(
         // "SELECT Length, Width, Weight, Thickness FROM Item WHERE PartNo = @search"
-        "SELECT Length, Rev, Width, Weight, Thickness FROM Item WHERE PartNo = @search AND Rev = @rev"
+        "SELECT Length, Rev, Width, Weight, Thickness, Description1 FROM Item WHERE PartNo = @search AND Rev = @rev"
       ); // select * with partNo
 
     return NextResponse.json(result.recordset);

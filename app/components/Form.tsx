@@ -31,6 +31,7 @@ export default function FillForm() {
     item_rev,
     task_for,
     task_by,
+    description,
     resetInputs,
   } = inputStore();
 
@@ -53,7 +54,7 @@ export default function FillForm() {
         const updatedItemNumber =
           inpName === "item_number" ? value.trim() : item_number.trim();
 
-        // Reset fields if either `rev` or `item_number` is empty
+        // Reset fields if either `item_rev` or `item_number` is empty
         if (!updatedRev || !updatedItemNumber) {
           setInput("item_length", "");
           setInput("item_width", "");
@@ -78,7 +79,14 @@ export default function FillForm() {
           setInput("item_width", result[0].Width || "");
           setInput("item_height", result[0].Height || "");
           setInput("item_weight", result[0].Weight || "");
-          setInput("item_rev", result[0].Rev || "");
+          setInput("item_rev", result[0].Rev.toString() || "");
+          setInput("description", result[0].Description1 || "");
+          // setInput(
+          //   "item_rev",
+          //   result[0].Rev !== undefined ? result[0].Rev : item_rev
+          // );
+          console.log(description);
+
           // setInput("item_name", result[0]."check in db" || "");
         } else {
           // Reset fields if no result is found
@@ -86,7 +94,7 @@ export default function FillForm() {
           setInput("item_width", "");
           setInput("item_height", "");
           setInput("item_weight", "");
-          setInput("item_rev", "");
+          // setInput("item_rev", "");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -100,7 +108,7 @@ export default function FillForm() {
 
     addTask(
       item_number,
-      " request -> updateInpStore -> item_name",
+      description,
       item_qty,
       item_rev,
       selected_oven,
